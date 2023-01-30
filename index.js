@@ -1,11 +1,31 @@
 const { Sequelize, Model, DataTypes } = require("sequelize");
 
 const sequelize = new Sequelize({
-  dialect: 'postgres',
-  database: 'main',
-  username: 'postgres',
-  password: 'postgres',
-  port: 5433
+  dialect: "postgres",
+  database: "main",
+  username: "postgres",
+  password: "postgres",
+  port: 5433,
+  replication: {
+    write: {
+      database: "main",
+      username: "postgres",
+      password: "postgres",
+      port: 5433,
+    },
+    read: {
+      database: "main",
+      username: "postgres",
+      password: "postgres",
+      port: 5433,
+    },
+    shard: {
+      database: "shard",
+      username: "postgres",
+      password: "postgres",
+      port: 5433,
+    },
+  },
 });
 
 class Thing extends Model {}
@@ -21,9 +41,14 @@ ShardedThing.init(
   {
     name: DataTypes.STRING,
   },
-  { sequelize, modelName: "sharded_things" }
+  { sequelize, modelName: "sharded_things", sharded: true }
 );
 
 (async () => {
   await sequelize.sync();
+
+  await Thing.findAll();
+
+  await Thing.drop();
+  await ShardedThing.drop();
 })();
