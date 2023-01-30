@@ -1,5 +1,5 @@
 const { Sequelize, Model, DataTypes } = require('sequelize');
-const sequelize = new Sequelize('postgres://postgres:postgres@127.0.0.1:5433/postgres');
+const sequelize = new Sequelize('postgres://postgres:postgres@127.0.0.1:5433/main');
 
 class Thing extends Model {}
 Thing.init({
@@ -23,7 +23,4 @@ ShardedThing.init({
     name: 'Sam Johnson',
   });
   console.log(shardedThing.toJSON());
-
-  await Thing.drop();
-  await ShardedThing.drop();
 })();
