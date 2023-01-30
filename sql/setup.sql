@@ -1,1 +1,2 @@
-select 1;
+create database main;
+create database shard;
