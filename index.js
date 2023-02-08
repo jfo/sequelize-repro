@@ -1,5 +1,5 @@
-const { Sequelize, Model, DataTypes } = require("sequelize");
-// const { Sequelize, Model, DataTypes } = require("@sequelize/core");
+// const { Sequelize, Model, DataTypes } = require("sequelize");
+const { Sequelize, Model, DataTypes } = require("@sequelize/core");
 
 const sequelize = new Sequelize({
   dialect: "postgres",
@@ -9,16 +9,52 @@ const sequelize = new Sequelize({
   port: 5433,
 });
 
-class Thing extends Model {}
-Thing.init(
+const MainThing = sequelize.define(
+  "MainThing",
+  {
+    mainThingKey: {
+      type: DataTypes.BIGINT,
+      primaryKey: true,
+    },
+  },
+  { sequelize, modelName: "main_things" }
+);
+
+const SecondaryThing = sequelize.define(
+  "SecondaryThing",
+  {
+    mainThingKey: {
+      type: DataTypes.BIGINT,
+      primaryKey: true,
+    },
+  },
+  { sequelize, modelName: "secondary_things" }
+);
+
+const AncillaryThing = sequelize.define(
+  "AncillaryThing",
   {
     name: DataTypes.STRING,
+    mainThingKey: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
+    },
   },
-  { sequelize, modelName: "things" }
+  { sequelize, modelName: "answer_topics" }
 );
+
+MainThing.hasMany(AncillaryThing, { foreignKey: "mainThingKey", as: "topics" });
+AncillaryThing.belongsTo(MainThing, {
+  foreignKey: {
+    name: "mainThingKey",
+    allowNull: false,
+    onDelete: "cascade",
+  },
+  as: "answer",
+});
+SecondaryThing.hasMany(AncillaryThing, { foreignKey: "mainThingKey" });
 
 (async () => {
   await sequelize.sync();
-  await Thing.drop();
   await sequelize.close();
 })();
