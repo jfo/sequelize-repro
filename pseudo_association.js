@@ -47,12 +47,15 @@ MainThing.hasMany(AncillaryThing, { foreignKey: "mainThingKey", as: "topics" });
 AncillaryThing.belongsTo(MainThing, {
   foreignKey: {
     name: "mainThingKey",
-    allowNull: false,
-    onDelete: "cascade",
+    // allowNull: false,
+    // onDelete: "cascade",
   },
   as: "answer",
 });
-SecondaryThing.hasMany(AncillaryThing, { foreignKey: "mainThingKey" });
+SecondaryThing.hasMany(AncillaryThing, {
+  foreignKey: "mainThingKey",
+  // foreignKeyConstraints: false,
+});
 
 (async () => {
   await sequelize.sync();
