@@ -1,5 +1,5 @@
-// const { Sequelize, Model, DataTypes } = require("sequelize");
-const { Sequelize, Model, DataTypes, Op } = require("@sequelize/core");
+const { Sequelize, Model, DataTypes, Op } = require("sequelize");
+// const { Sequelize, Model, DataTypes, Op } = require("@sequelize/core");
 
 const sequelize = new Sequelize({
   dialect: "postgres",
@@ -9,14 +9,31 @@ const sequelize = new Sequelize({
   port: 5433,
 });
 
+class Business extends Model {}
+Business.init(
+  {
+    column: DataTypes.ARRAY(DataTypes.STRING),
+  },
+  {
+    sequelize,
+    modelName: "businesses",
+  }
+);
+
 (async () => {
   await sequelize.sync();
 
-  const x = await sequelize.query("select 1 where 'hey' = $1 and 'blah' = ANY(ARRAY[$2] ) and $3 = 'here'", {
-    bind: ['hey', 'blah', "here"],
+  // await Business.findAll({
+  //   where: { column: { [Op.contains]: "string" } }, // this works
+  // });
+
+  Business.findAll({
+    where: { column: { [Op.in]: "string" } }, // errors out
   });
 
-  console.log(x);
+  // Business.findAll({
+  //   where: { column: { [Op.any]: "string" } }, // errors out
+  // });
 
   await sequelize.close();
 })();

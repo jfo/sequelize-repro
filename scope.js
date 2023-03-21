@@ -1,5 +1,6 @@
 // const { Sequelize, Model, DataTypes } = require("sequelize");
 const { Sequelize, Model, DataTypes } = require("@sequelize/core");
+// const { Sequelize, Model, DataTypes } = require("@sequelize/core-jfo");
 
 const sequelize = new Sequelize({
   dialect: "postgres",
@@ -23,6 +24,9 @@ const Thing = sequelize.define(
     arrayOfStrings: {
       type: DataTypes.ARRAY(DataTypes.STRING(128)),
     },
+    arrayOfEnums: {
+      type: DataTypes.ARRAY(DataTypes.ENUM(['fart', 'butt'])),
+    },
   },
   {
     sequelize,
@@ -39,8 +43,8 @@ const Thing = sequelize.define(
 (async () => {
   await sequelize.sync();
   await Thing.create();
-  const x = await Thing.withScope('everything').findAll();
-  console.log(x)
+  // const x = await Thing.withScope('everything').findAll();
+  // console.log(x)
   await Thing.drop();
   await sequelize.close();
 })();
