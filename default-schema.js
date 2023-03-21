@@ -12,7 +12,7 @@ const sequelize = new Sequelize({
   },
 });
 
-const Thing = sequelize.define("Thing", {}, {});
+const Thing = sequelize.define("Thing", {}, { schema: undefined });
 
 // console.log(Thing._schema); // myFavSchema
 console.log(Thing.modelDefinition?.schema); // undefined
