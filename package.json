@@ -4,7 +4,7 @@
     "teardown": "PGPASSWORD=postgres psql -h 127.0.0.1 -p 5433 -U postgres -d postgres -f ./sql/teardown.sql"
   },
   "dependencies": {
-    "@sequelize/core": "^7.0.0-alpha.21",
+    "@sequelize/core": "^7.0.0-alpha.23",
     "@sequelize/core-jfo": "git+https://github.com/jfo/sequelize.git#936ad105eadf505025b9085fd916d6df888eeb32",
     "cls-hooked": "^4.2.2",
     "pg": "^8.9.0",
