@@ -15,4 +15,4 @@ const sequelize = new Sequelize({
 const Thing = sequelize.define("Thing", {}, { schema: undefined });
 
 // console.log(Thing._schema); // myFavSchema
-console.log(Thing.modelDefinition?.schema); // undefined
+console.log(Thing.modelDefinition?.options.schema); // undefined
