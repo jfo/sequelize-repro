@@ -1,6 +1,5 @@
 // const { Sequelize, Model, DataTypes } = require("sequelize");
 const { Sequelize, Model, DataTypes } = require("@sequelize/core");
-// const { Sequelize, Model, DataTypes } = require("@sequelize/core-jfo");
 
 const sequelize = new Sequelize({
   dialect: "postgres",
@@ -41,8 +40,8 @@ const Thing = sequelize.define(
 (async () => {
   await sequelize.sync();
   await Thing.create();
-  // const x = await Thing.withScope('everything').findAll();
-  // console.log(x)
+  // await Thing.scope('everything').findAll();
+  await Thing.withScope('everything').findAll();
   await Thing.drop();
   await sequelize.close();
 })();
