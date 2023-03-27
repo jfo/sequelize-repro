@@ -25,14 +25,12 @@ const Thing = sequelize.define(
       type: DataTypes.ARRAY(DataTypes.STRING(128)),
     },
     arrayOfEnums: {
-      type: DataTypes.ARRAY(DataTypes.ENUM(['fart', 'butt'])),
+      type: DataTypes.ARRAY(DataTypes.ENUM(['wow', 'cool'])),
     },
   },
   {
     sequelize,
     tableName: "things",
-
-    defaultScope: {},
 
     scopes: {
       everything: {},
