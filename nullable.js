@@ -45,6 +45,7 @@ const Thing2 = sequelize.define(
 Thing.hasMany(Thing2, {
   foreignKey: {
     name: "thingId",
+    // This is what's missing, uncomment to see the NOT NULL constraint appear on CREATE TABLE
     // allowNull: false,
   },
   onUpdate: "CASCADE",
