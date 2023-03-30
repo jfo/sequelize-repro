@@ -5,7 +5,7 @@
   },
   "dependencies": {
     "@sequelize/core": "7.0.0-alpha.25",
-    "@sequelize/core-jfo": "git+https://github.com/jfo/sequelize.git#936ad105eadf505025b9085fd916d6df888eeb32",
+    "@sequelize/core-jfo": "git+https://github.com/jfo/sequelize.git#3e3afa564604568d8136536e89447f47396a8865",
     "cls-hooked": "^4.2.2",
     "pg": "^8.9.0",
     "pg-hstore": "^2.3.4",
