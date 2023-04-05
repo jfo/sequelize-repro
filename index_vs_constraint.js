@@ -1,13 +1,17 @@
-// const { Sequelize, Model, DataTypes } = require("sequelize");
-const { Sequelize, Model, DataTypes } = require("@sequelize/core");
+const path = require("path");
+const { pgCommand } = require("./util.js");
+const { Sequelize, Model, DataTypes } = require("sequelize");
+// const { Sequelize, Model, DataTypes } = require("@sequelize/core");
 
-const sequelize = new Sequelize({
+const db = {
+  host: "localhost",
   dialect: "postgres",
   database: "main",
   username: "postgres",
   password: "postgres",
   port: 5433,
-});
+}
+const sequelize = new Sequelize(db);
 
 const Thing = sequelize.define(
   "Thing",
@@ -28,6 +32,9 @@ const Thing = sequelize.define(
 
 (async () => {
   await sequelize.sync();
-  // await sequelize.drop();
+
+  await pgCommand(db, 'pg_dump', `--schema-only > ${path.join('/tmp', 'schema_before.sql')}`);
+
+  await sequelize.drop();
   await sequelize.close();
 })();
